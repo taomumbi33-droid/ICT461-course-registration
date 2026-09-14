@@ -1,0 +1,263 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ICT461 Course Registration</title>
+
+<style>
+* {
+box-sizing: border-box;
+font-family: system-ui, Arial, sans-serif;
+}
+
+body {
+background: #a7c4f0;
+margin: 0;
+display: flex;
+justify-content: center;
+padding: 20px;
+}
+
+main {
+width: 100%;
+max-width: 480px;
+background: white;
+padding: 28px;
+border-radius: 12px;
+box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+font-size: 1.4rem;
+text-align: center;
+color: #1a3d5d;
+margin: 0 0 8px;
+}
+
+header p {
+text-align: center;
+color: #666;
+margin: 0 0 20px;
+}
+
+label {
+display: block;
+margin: 14px 0 6px;
+font-weight: 600;
+}
+
+input,
+select {
+width: 100%;
+padding: 11px;
+border: 1px solid #ccc;
+border-radius: 6px;
+}
+
+input:focus,
+select:focus {
+border-color: #0b63f6;
+outline: 3px solid rgba(11, 99, 246, 0.2);
+}
+
+.error {
+color: #c0392b;
+font-size: 0.85rem;
+min-height: 18px;
+margin-top: 4px;
+}
+
+.success {
+background: #e7f6ec;
+color: #0a6b2a;
+padding: 10px;
+border-radius: 6px;
+margin-top: 16px;
+display: none;
+}
+
+button {
+width: 100%;
+margin-top: 18px;
+padding: 12px;
+background: #0b63f6;
+color: white;
+border: none;
+border-radius: 6px;
+font-weight: 700;
+cursor: pointer;
+}
+
+button:hover {
+background: #084ec2;
+}
+
+@media (max-width: 600px) {
+main {
+padding: 18px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<main>
+
+<header>
+<h1>ICT461 Registration</h1>
+<p>Web Systems and Technology</p>
+</header>
+
+<form id="regForm" novalidate>
+
+<!-- Full Name -->
+<label for="name">Full Name</label>
+
+<input
+type="text"
+id="name"
+name="name"
+required
+minlength="4"
+pattern="[A-Za-z\s]+"
+autocomplete="name"
+placeholder="Enter Name"
+>
+
+<div class="error" id="nameError"></div>
+
+<!-- Student ID -->
+<label for="studentId">Student ID</label>
+
+<input
+type="text"
+id="studentId"
+name="studentId"
+required
+pattern="[A-Z0-9]{6,10}"
+inputmode="text"
+placeholder="Enter student Id"
+>
+
+<div class="error" id="idError"></div>
+
+<!-- Programme -->
+<label for="programme">Programme</label>
+
+<select id="programme" name="programme" required>
+<option value="">-- Select --</option>
+<option value="ICT">Cyber Security</option>
+<option value="Computer Science">Computer Science</option>
+<option value="Engineering">Data Science</option>
+</select>
+
+<div class="error" id="progError"></div>
+
+<!-- Course -->
+<label for="course">Course</label>
+
+<select id="course" name="course" required>
+<option value="">-- Select Course --</option>
+<option value="ICT461 - Web Systems">ICT461 - Web Systems</option>
+</select>
+
+<div class="error" id="courseError"></div>
+
+<!-- Submit -->
+<button type="submit">Register</button>
+
+<div
+class="success"
+id="successMsg"
+role="status"
+aria-live="polite">
+</div>
+
+</form>
+
+</main>
+
+<script>
+// Get the form
+const form = document.getElementById("regForm");
+
+// Run when the user clicks Register
+form.addEventListener("submit", function(event) {
+
+// Stop the browser from refreshing/submitting the page
+event.preventDefault();
+
+// Get the form fields
+const name = document.getElementById("name");
+const studentId = document.getElementById("studentId");
+const programme = document.getElementById("programme");
+const course = document.getElementById("course");
+
+// Get the error message areas
+const nameError = document.getElementById("nameError");
+const idError = document.getElementById("idError");
+const progError = document.getElementById("progError");
+const courseError = document.getElementById("courseError");
+
+// Get success message
+const successMsg = document.getElementById("successMsg");
+
+// Clear previous messages
+nameError.textContent = "";
+idError.textContent = "";
+progError.textContent = "";
+courseError.textContent = "";
+successMsg.style.display = "none";
+
+// Assume the form is valid
+let valid = true;
+
+// Check name
+if (!name.validity.valid) {
+nameError.textContent =
+"Enter at least 4 letters and no numbers.";
+valid = false;
+}
+
+// Check Student ID
+if (!studentId.validity.valid) {
+idError.textContent =
+"Student ID must be 6-10 uppercase letters/numbers.";
+valid = false;
+}
+
+// Check programme
+if (!programme.validity.valid) {
+progError.textContent =
+"Please select your programme.";
+valid = false;
+}
+
+// Check course
+if (!course.validity.valid) {
+courseError.textContent =
+"Please select a course.";
+valid = false;
+}
+
+// If everything is valid
+if (valid) {
+
+successMsg.textContent =
+"Registered: " +
+name.value +
+" for " +
+course.value;
+
+successMsg.style.display = "block";
+}
+});
+</script>
+
+</body>
+</html>
